@@ -23,7 +23,6 @@ jobs:
 
   build:
     name : Build
-    needs : lint
     runs-on: ubuntu-latest
 
     steps:
@@ -43,7 +42,7 @@ jobs:
   
   test:
     name : Test
-    needs : build
+    needs : [lint,build]
     runs-on: ubuntu-latest
       
     steps:
