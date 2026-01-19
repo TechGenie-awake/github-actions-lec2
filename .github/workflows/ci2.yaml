@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name : Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name : Set up Node.js
         uses: actions/setup-node@v4
@@ -22,12 +22,13 @@ jobs:
         run: npm run lint
 
   build:
-    name : Build and Test
+    name : Build
+    needs : lint
     runs-on: ubuntu-latest
 
     steps:
       - name : Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name : Set up Node.js
         uses: actions/setup-node@v4
@@ -42,11 +43,12 @@ jobs:
   
   test:
     name : Test
+    needs : build
     runs-on: ubuntu-latest
       
     steps:
       - name : Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name : Set up Node.js
         uses: actions/setup-node@v4
@@ -61,11 +63,12 @@ jobs:
 
   deploy:
     name : Deploy
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
       - name : Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name : Set up Node.js
         uses: actions/setup-node@v4
@@ -75,6 +78,6 @@ jobs:
       - name : Install dependencies
         run: npm install
 
-      - name : Deploy to Production
+      - name : Deploy
         run: npm run deploy
 
